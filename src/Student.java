@@ -4,6 +4,8 @@ public class Student {
     private String Group;
     private String SubGroup;
 
+    public Student(Long id) { this.Id = id; }
+
     public String getName() { return  this.Name; }
 
     public void setName(String value) { this.Name = value; }

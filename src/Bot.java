@@ -26,7 +26,7 @@ public class Bot extends TelegramLongPollingBot {
         Message message = update.getMessage();
         Long id = message.getChatId();
         if (!Students.containsKey(id))
-            Students.put(id, new Student());
+            Students.put(id, new Student(id));
         if (message != null && message.hasText()){
             switch (message.getText()){
                 case "/help":
