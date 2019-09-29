@@ -1,26 +1,18 @@
 public class Student {
-    private String Id;
+    private Long Id;
     private String Name;
     private String Group;
-    private Integer SubGroup;
-
-    public Student(String name) {
-        this.Name = name;
-    }
+    private String SubGroup;
 
     public String getName() { return  this.Name; }
 
+    public void setName(String value) { this.Name = value; }
+
     public String getGroup() { return  this.Group; }
 
-    public void setGroup(String group) {
-        //проверка
-        Group = group;
-    }
+    public void setGroup(String value) { this.Group = value; }
 
-    public Integer getSubGroup() { return  this.SubGroup; }
+    public String getSubGroup() { return this.SubGroup; }
 
-    public void setSubGroup(String subGroup) {
-        //проверка
-        SubGroup = Integer.parseInt(subGroup);
-    }
+    public void setSubGroup(String value) { this.SubGroup = value; }
 }
