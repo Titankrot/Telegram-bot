@@ -39,7 +39,9 @@ public class Bot extends TelegramLongPollingBot {
                 Student.QuestionsToAttr.containsKey(message.getReplyToMessage().getText())) {
             String question = message.getReplyToMessage().getText();
             student.setAttr(Student.QuestionsToAttr.get(question), message.getText());
-            sendText(message, student.askAthorizationQues(Student.questionNumber(question) + 1));
+            String text = student.askAthorizationQues(Student.questionNumber(question) + 1);
+            if (text != null)
+                sendText(message, text);
             return;
         }
         if (message.hasText()){

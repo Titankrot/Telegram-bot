@@ -38,6 +38,8 @@ public class Student {
     }
 
     String askAthorizationQues(int authorizeStep){
+        if (authorizeStep == AuthorizeQuestions.length)
+            return null;
         return AuthorizeQuestions[authorizeStep];
     }
 
