@@ -1,78 +1,79 @@
 import java.util.Map;
 
 public class Student {
-    private int Id;
-    private String Name;
-    private String Group;
-    private String SubGroup;
+    private int id;
+    private String name;
+    private String group;
+    private String subgroup;
 
-    Student(int id) { this.Id = id; }
+    Student(int id) { this.id = id; }
 
-    private static String[] AuthorizeQuestions = new String[]{
+    private static String[] autorizeQuestions = new String[] {
             "Как твое имя?",
             "Какая у тебя группа?",
             "Какой номер твоей группы?"
     };
 
     static int questionNumber(String quest){
-        for (int i = 0; i < AuthorizeQuestions.length; i++) {
-            String p = AuthorizeQuestions[i];
-            if (AuthorizeQuestions[i].equals(quest))
+        for (int i = 0; i < autorizeQuestions.length; i++) {
+            String p = autorizeQuestions[i];
+            if (autorizeQuestions[i].equals(quest))
                 return i;
         }
         return -1;
     }
 
-    static Map<String, String> QuestionsToAttr = Map.of(
-            AuthorizeQuestions[0], "Name",
-            AuthorizeQuestions[1], "Group",
-            AuthorizeQuestions[2], "SubGroup"
+    static Map<String, String> questionsToAttr = Map.of(
+            autorizeQuestions[0], "Name",
+            autorizeQuestions[1], "Group",
+            autorizeQuestions[2], "Subgroup"
     );
     
     boolean isNotAuthorized(){
-        for (String value: new String[]{this.Name, this.Group, this.SubGroup}) {
+        for (String value: new String[]{this.name, this.group, this.subgroup}) {
             if (value == null)
                 return true;
         }
         return false;
     }
 
-    String askAthorizationQues(int authorizeStep){
-        if (authorizeStep == AuthorizeQuestions.length)
+    String askAuthorizationQues(int authorizeStep){
+        if (authorizeStep == autorizeQuestions.length)
             return null;
-        return AuthorizeQuestions[authorizeStep];
+        return autorizeQuestions[authorizeStep];
     }
 
-    public String getName() { return  this.Name; }
+    public String getname() { return  this.name; }
 
-    public void setName(String value) { this.Name = value; }
+    public void setname(String value) { this.name = value; }
 
-    public String getGroup() { return  this.Group; }
+    public String getgroup() { return  this.group; }
 
-    public void setGroup(String value) { this.Group = value; }
+    public void setgroup(String value) { this.group = value; }
 
-    public String getSubGroup() { return this.SubGroup; }
+    public String getsubgroup() { return this.subgroup; }
 
-    public void setSubGroup(String value) { this.SubGroup = value; }
+    public void setsubgroup(String value) { this.subgroup = value; }
 
-    void setAttr(String attrName, String value){
-        switch (attrName){
+    void setAttr(String attrname, String value) {
+        switch (attrname){
             case "Name":
-                this.Name = value;
+                this.name = value;
                 break;
             case "Group":
-                this.Group = value;
+                this.group = value;
                 break;
-            case "SubGroup":
-                this.SubGroup = value;
+            case "Subgroup":
+                this.subgroup = value;
                 break;
         }
     }
 
-    String ToString(){
+    @Override
+    public String toString() {
         if (this.isNotAuthorized())
             return "Пользователь не авторизован";
         return String.format("Имя: %s\nГруппа: %s\nНомер группы: %s",
-                this.Name, this.Group, this.SubGroup);
+                this.name, this.group, this.subgroup);
     }
 }

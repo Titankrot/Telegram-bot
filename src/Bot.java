@@ -8,9 +8,14 @@ import org.telegram.telegrambots.exceptions.TelegramApiException;
 import java.util.HashMap;
 
 public class Bot extends TelegramLongPollingBot {
-    private HashMap<Integer, Student> Students = new HashMap<>();
+    private HashMap<Integer, Student> students = new HashMap<>();
+    private String botToken;
 
-    private void sendText(Message message, String str){
+    public Bot(String token) {
+        botToken = token;
+    }
+
+    private void sendText(Message message, String str) {
         SendMessage sendMessage = new SendMessage();
         sendMessage.enableMarkdown(true);
         sendMessage.setChatId(message.getChatId().toString());
@@ -26,20 +31,20 @@ public class Bot extends TelegramLongPollingBot {
     public void onUpdateReceived(Update update) {
         Message message = update.getMessage();
         int id = message.getFrom().getId();
-        if (!Students.containsKey(id)) {
+        if (!students.containsKey(id)) {
             Student student = new Student(id);
-            Students.put(id, student);
-            sendText(message, student.askAthorizationQues(0));
+            students.put(id, student);
+            sendText(message, student.askAuthorizationQues(0));
             return;
         }
-        Student student = Students.get(id);
+        Student student = students.get(id);
         if (student.isNotAuthorized() &&
                 message.getText() != null &&
                 message.getReplyToMessage() != null &&
-                Student.QuestionsToAttr.containsKey(message.getReplyToMessage().getText())) {
+                Student.questionsToAttr.containsKey(message.getReplyToMessage().getText())) {
             String question = message.getReplyToMessage().getText();
-            student.setAttr(Student.QuestionsToAttr.get(question), message.getText());
-            String text = student.askAthorizationQues(Student.questionNumber(question) + 1);
+            student.setAttr(Student.questionsToAttr.get(question), message.getText());
+            String text = student.askAuthorizationQues(Student.questionNumber(question) + 1);
             if (text != null)
                 sendText(message, text);
             return;
@@ -53,7 +58,7 @@ public class Bot extends TelegramLongPollingBot {
                     sendText(message, "hz poka");
                     break;
                 case "/info":
-                    sendText(message, student.ToString());
+                    sendText(message, student.toString());
                     break;
                 default:
                     sendText(message, "hz poka");
@@ -67,6 +72,6 @@ public class Bot extends TelegramLongPollingBot {
     }
 
     public String getBotToken() {
-        return "967966815:AAFUMT98NnKDu4p7NG7dAuDS5Ug8EzNLav8";
+        return botToken;
     }
 }
