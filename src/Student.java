@@ -1,4 +1,4 @@
-import java.util.Map;
+import java.util.regex.Pattern;
 
 public class Student {
     private int id;
@@ -8,27 +8,6 @@ public class Student {
 
     Student(int id) { this.id = id; }
 
-    private static String[] autorizeQuestions = new String[] {
-            "Как твое имя?",
-            "Какая у тебя группа?",
-            "Какой номер твоей группы?"
-    };
-
-    static int questionNumber(String quest){
-        for (int i = 0; i < autorizeQuestions.length; i++) {
-            String p = autorizeQuestions[i];
-            if (autorizeQuestions[i].equals(quest))
-                return i;
-        }
-        return -1;
-    }
-
-    static Map<String, String> questionsToAttr = Map.of(
-            autorizeQuestions[0], "Name",
-            autorizeQuestions[1], "Group",
-            autorizeQuestions[2], "Subgroup"
-    );
-    
     boolean isNotAuthorized(){
         for (String value: new String[]{this.name, this.group, this.subgroup}) {
             if (value == null)
@@ -37,35 +16,34 @@ public class Student {
         return false;
     }
 
-    String askAuthorizationQues(int authorizeStep){
-        if (authorizeStep == autorizeQuestions.length)
-            return null;
-        return autorizeQuestions[authorizeStep];
-    }
+    public String getName() { return  this.name; }
 
-    public String getname() { return  this.name; }
+    public String getGroup() { return  this.group; }
 
-    public void setname(String value) { this.name = value; }
+    public String getSubgroup() { return this.subgroup; }
 
-    public String getgroup() { return  this.group; }
-
-    public void setgroup(String value) { this.group = value; }
-
-    public String getsubgroup() { return this.subgroup; }
-
-    public void setsubgroup(String value) { this.subgroup = value; }
-
-    void setAttr(String attrname, String value) {
-        switch (attrname){
+    String setAttr(String attrName, String value) {
+        switch (attrName) {
             case "Name":
-                this.name = value;
-                break;
+                if (Pattern.matches(".+", value)) {
+                    this.name = value;
+                    return null;
+                }
+                else return "Должен состоять из символов";
             case "Group":
-                this.group = value;
-                break;
+                if (Pattern.matches("[а-яА-Я]+[-_ ]\\d{3}", value)) {
+                    this.group = value;
+                    return null;
+                }
+                else return "Введите группу по шаблону КН-203";
             case "Subgroup":
-                this.subgroup = value;
-                break;
+                if (Pattern.matches("[12]", value)) {
+                    this.subgroup = value;
+                    return null;
+                }
+                else return "введите 1 или 2";
+            default:
+                return "";
         }
     }
 

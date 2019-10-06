@@ -1,7 +1,7 @@
 import org.telegram.telegrambots.api.methods.send.SendMessage;
 import org.telegram.telegrambots.api.objects.Message;
 import org.telegram.telegrambots.api.objects.Update;
-import org.telegram.telegrambots.api.objects.User;
+// import org.telegram.telegrambots.api.objects.User;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.exceptions.TelegramApiException;
 
@@ -22,7 +22,7 @@ public class Bot extends TelegramLongPollingBot {
         sendMessage.setReplyToMessageId(message.getMessageId());
         sendMessage.setText(str);
         try{
-            sendMessage(sendMessage);
+            sendApiMethod(sendMessage);
         } catch (TelegramApiException e){
             e.printStackTrace();
         }
@@ -30,25 +30,9 @@ public class Bot extends TelegramLongPollingBot {
 
     public void onUpdateReceived(Update update) {
         Message message = update.getMessage();
+        Student student = authorizeStudent(message);
+        if (student == null) return;
         int id = message.getFrom().getId();
-        if (!students.containsKey(id)) {
-            Student student = new Student(id);
-            students.put(id, student);
-            sendText(message, student.askAuthorizationQues(0));
-            return;
-        }
-        Student student = students.get(id);
-        if (student.isNotAuthorized() &&
-                message.getText() != null &&
-                message.getReplyToMessage() != null &&
-                Student.questionsToAttr.containsKey(message.getReplyToMessage().getText())) {
-            String question = message.getReplyToMessage().getText();
-            student.setAttr(Student.questionsToAttr.get(question), message.getText());
-            String text = student.askAuthorizationQues(Student.questionNumber(question) + 1);
-            if (text != null)
-                sendText(message, text);
-            return;
-        }
         if (message.hasText()){
             switch (message.getText()){
                 case "/help":
@@ -61,9 +45,40 @@ public class Bot extends TelegramLongPollingBot {
                     sendText(message, student.toString());
                     break;
                 default:
-                    sendText(message, "hz poka");
+                    sendText(message, "Чтобы ответить боту смахните его вопрос влево,\n" +
+                            "Чтобы вызвать информацию о себе:\n /info");
                     break;
             }
+        }
+    }
+
+    private Student authorizeStudent(Message message) {
+        int id = message.getFrom().getId();
+        if (!students.containsKey(id)) {
+            Student student = new Student(id);
+            students.put(id, student);
+            sendText(message, Questionnaire.askAuthorizationQuestion(0));
+            return null;
+        }
+        else {
+            Student student = students.get(id);
+            if (student.isNotAuthorized() &&
+                    message.getText() != null &&
+                    message.getReplyToMessage() != null &&
+                    Questionnaire.questionsToAttr.containsKey(message.getReplyToMessage().getText())) {
+                String question = message.getReplyToMessage().getText();
+                String error = student.setAttr(Questionnaire.questionsToAttr.get(question), message.getText());
+                if (error == null) {
+                    String text = Questionnaire.askAuthorizationQuestion(
+                            Questionnaire.questionNumber(question)
+                            + 1);
+                    if (text != null)
+                        sendText(message, text);
+                }
+                else sendText(message, error);
+                return null;
+            }
+            return student;
         }
     }
 
