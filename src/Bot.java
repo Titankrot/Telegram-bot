@@ -10,9 +10,11 @@ import java.util.HashMap;
 public class Bot extends TelegramLongPollingBot {
     private HashMap<Integer, Student> students = new HashMap<>();
     private String botToken;
+    private Schedule schedule;
 
     public Bot(String token) {
         botToken = token;
+        schedule = new Schedule();
     }
 
     private void sendText(Message message, String str) {
