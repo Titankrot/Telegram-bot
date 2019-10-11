@@ -11,7 +11,7 @@ public class Schedule {
             3, "×ò",
             4, "Ïò",
             5, "Ñá",
-            6,"Âñ");
+            6, "Âñ");
 
     public static void main(String[] args) {
         Schedule k = new Schedule();
