@@ -1,3 +1,5 @@
+package bot;
+
 import java.util.Map;
 
 public class Questionnaire {

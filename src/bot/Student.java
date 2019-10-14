@@ -1,3 +1,5 @@
+package bot;
+
 import java.util.regex.Pattern;
 
 public class Student {
@@ -6,7 +8,7 @@ public class Student {
     private String group;
     private String subgroup;
 
-    Student(int id) { this.id = id; }
+    public Student(int id) { this.id = id; }
 
     boolean isNotAuthorized(){
         for (String value: new String[]{this.name, this.group, this.subgroup}) {
@@ -22,7 +24,7 @@ public class Student {
 
     public String getSubgroup() { return this.subgroup; }
 
-    String setAttr(String attrName, String value) {
+    public String setAttr(String attrName, String value) {
         switch (attrName) {
             case "Name":
                 if (Pattern.matches(".+", value)) {
@@ -32,7 +34,8 @@ public class Student {
                 else return "Должен состоять из символов";
             case "Group":
                 if (Pattern.matches("[а-яА-Я]+[-_ ]\\d{3}", value)) {
-                    this.group = value;
+                    String[] array = value.split("[-_ ]");
+                    this.group = array[0] + "-" +array[1];
                     return null;
                 }
                 else return "Введите группу по шаблону КН-203";
