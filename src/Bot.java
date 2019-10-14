@@ -37,6 +37,9 @@ public class Bot extends TelegramLongPollingBot {
         int id = message.getFrom().getId();
         if (message.hasText()){
             switch (message.getText()){
+                case "/today":
+                    sendText(message, schedule.getTodaySchedule(student));
+                    break;
                 case "/help":
                     sendText(message, "hz poka");
                     break;

@@ -2,9 +2,9 @@ import java.util.Map;
 
 public class Questionnaire {
     private static String[] autorizeQuestions = new String[] {
-            "РљР°Рє С‚РІРѕРµ РёРјСЏ?",
-            "РљР°РєР°СЏ Сѓ С‚РµР±СЏ РіСЂСѓРїРїР°?",
-            "РљР°РєРѕР№ РЅРѕРјРµСЂ С‚РІРѕРµР№ РїРѕРґРіСЂСѓРїРїС‹?"
+            "Как твое имя?",
+            "Какая у тебя группа?",
+            "Какой номер твоей подгруппы?"
     };
 
     static int questionNumber(String quest){
