@@ -71,12 +71,12 @@ public class Bot extends TelegramLongPollingBot {
             if (student.isNotAuthorized() &&
                     message.getText() != null &&
                     message.getReplyToMessage() != null &&
-                    Questionnaire.questionsToAttr.containsKey(message.getReplyToMessage().getText())) {
+                    Questionnaire.containsInQuestions(message.getReplyToMessage().getText())) {
                 String question = message.getReplyToMessage().getText();
-                String error = student.setAttr(Questionnaire.questionsToAttr.get(question), message.getText());
+                String error = student.setAttr(Questionnaire.getAttrFromQuestion(question), message.getText());
                 if (error == null) {
                     String text = Questionnaire.askAuthorizationQuestion(
-                            Questionnaire.questionNumber(question)
+                            Questionnaire.getQuestionNumber(question)
                             + 1);
                     if (text != null)
                         sendText(message, text);

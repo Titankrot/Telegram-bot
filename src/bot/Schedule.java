@@ -4,6 +4,7 @@ import java.io.*;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.Map;
+import java.util.Scanner;
 
 public class Schedule {
     private static Map<Integer, String> days = Map.of(
@@ -18,16 +19,16 @@ public class Schedule {
     private static String getScheduleFromTo(String group, String start, String end) throws IOException {
         String path = "rasp.txt";
         StringBuilder fileContent = new StringBuilder();
-        BufferedReader br = new BufferedReader(
+        Scanner br = new Scanner(
                 new InputStreamReader(
                         new FileInputStream(path), "utf-8"));
         String sub;
         boolean groupFound = false;
-        while ((sub = br.readLine()) != null && (!groupFound || !sub.contains(start))) {
+        while ((sub = br.nextLine()) != null && (!groupFound || !sub.contains(start))) {
             if (!groupFound)
                 groupFound = sub.contains(start);
         }
-        while ((sub = br.readLine()) != null && !sub.contains(end)) {
+        while ((sub = br.nextLine()) != null && !sub.contains(end)) {
             fileContent.append(sub + "\n");
         }
         return fileContent.toString();

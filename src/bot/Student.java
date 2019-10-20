@@ -24,22 +24,22 @@ public class Student {
 
     public String getSubgroup() { return this.subgroup; }
 
-    public String setAttr(String attrName, String value) {
-        switch (attrName) {
-            case "Name":
+    public String setAttr(Attr attr, String value) {
+        switch (attr) {
+            case Name:
                 if (Pattern.matches(".+", value)) {
                     this.name = value;
                     return null;
                 }
                 else return "Должен состоять из символов";
-            case "Group":
+            case Group:
                 if (Pattern.matches("[а-яА-Я]+[-_ ]\\d{3}", value)) {
                     String[] array = value.split("[-_ ]");
                     this.group = array[0] + "-" +array[1];
                     return null;
                 }
                 else return "Введите группу по шаблону КН-203";
-            case "Subgroup":
+            case Subgroup:
                 if (Pattern.matches("[12]", value)) {
                     this.subgroup = value;
                     return null;

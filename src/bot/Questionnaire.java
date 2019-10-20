@@ -1,32 +1,39 @@
 package bot;
 
-import java.util.Map;
+import java.util.Arrays;
 
 public class Questionnaire {
-    private static String[] autorizeQuestions = new String[] {
+    private static String[] authorizeQuestions = new String[] {
             "Как твое имя?",
             "Какая у тебя группа?",
             "Какой номер твоей подгруппы?"
     };
 
-    static int questionNumber(String quest){
-        for (int i = 0; i < autorizeQuestions.length; i++) {
-            String question = autorizeQuestions[i];
+    static boolean containsInQuestions(String question) {
+        return Arrays.asList(authorizeQuestions).contains(question);
+    }
+
+    public static Attr getAttrFromQuestion(String question) {
+        if (question == authorizeQuestions[0])
+            return Attr.Name;
+        else if (question == authorizeQuestions[1])
+            return Attr.Group;
+        else
+            return Attr.Subgroup;
+    };
+
+    public static int getQuestionNumber(String quest){
+        for (int i = 0; i < authorizeQuestions.length; i++) {
+            String question = authorizeQuestions[i];
             if (question.equals(quest))
                 return i;
         }
         return -1;
     }
 
-    static Map<String, String> questionsToAttr = Map.of(
-            autorizeQuestions[0], "Name",
-            autorizeQuestions[1], "Group",
-            autorizeQuestions[2], "Subgroup"
-    );
-
-    static String askAuthorizationQuestion(int authorizeStep){
-        if (authorizeStep == autorizeQuestions.length)
+    public static String askAuthorizationQuestion(int authorizeStep){
+        if (authorizeStep == authorizeQuestions.length)
             return null;
-        return autorizeQuestions[authorizeStep];
+        return authorizeQuestions[authorizeStep];
     }
 }
