@@ -4,9 +4,9 @@ import java.util.Arrays;
 
 public class Questionnaire {
     private static String[] authorizeQuestions = new String[] {
-            "Как твое имя?",
-            "Какая у тебя группа?",
-            "Какой номер твоей подгруппы?"
+            "РљР°Рє С‚РІРѕРµ РёРјСЏ?",
+            "РљР°РєР°СЏ Сѓ С‚РµР±СЏ РіСЂСѓРїРїР°?",
+            "РљР°РєРѕР№ РЅРѕРјРµСЂ С‚РІРѕРµР№ РїРѕРґРіСЂСѓРїРїС‹?"
     };
 
     static boolean containsInQuestions(String question) {
@@ -14,9 +14,9 @@ public class Questionnaire {
     }
 
     public static Attr getAttrFromQuestion(String question) {
-        if (question == authorizeQuestions[0])
+        if (question.equals(authorizeQuestions[0]))
             return Attr.Name;
-        else if (question == authorizeQuestions[1])
+        else if (question.equals(authorizeQuestions[1]))
             return Attr.Group;
         else
             return Attr.Subgroup;
