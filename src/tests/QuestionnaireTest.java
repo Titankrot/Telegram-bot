@@ -8,9 +8,9 @@ import static org.junit.Assert.*;
 
 public class QuestionnaireTest {
     private static String[] authorizeQuestions = new String[] {
-            "РљР°Рє С‚РІРѕРµ РёРјСЏ?",
-            "РљР°РєР°СЏ Сѓ С‚РµР±СЏ РіСЂСѓРїРїР°?",
-            "РљР°РєРѕР№ РЅРѕРјРµСЂ С‚РІРѕРµР№ РїРѕРґРіСЂСѓРїРїС‹?"
+            "Как твое имя?",
+            "Какая у тебя группа?",
+            "Какой номер твоей подгруппы?"
     };
 
     @Test
@@ -33,7 +33,7 @@ public class QuestionnaireTest {
 
     @Test
     public void getQuestionNumber_minus1() {
-        int i = Questionnaire.getQuestionNumber("РљР°Рє С‚Р°Рє С‚Рѕ?");
+        int i = Questionnaire.getQuestionNumber("Как так то?");
         assertEquals(-1, i);
     }
 

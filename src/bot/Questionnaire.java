@@ -4,9 +4,9 @@ import java.util.Arrays;
 
 public class Questionnaire {
     private static String[] authorizeQuestions = new String[] {
-            "РљР°Рє С‚РІРѕРµ РёРјСЏ?",
-            "РљР°РєР°СЏ Сѓ С‚РµР±СЏ РіСЂСѓРїРїР°?",
-            "РљР°РєРѕР№ РЅРѕРјРµСЂ С‚РІРѕРµР№ РїРѕРґРіСЂСѓРїРїС‹?"
+            "Как твое имя?",
+            "Какая у тебя группа?",
+            "Какой номер твоей подгруппы?"
     };
 
     static boolean containsInQuestions(String question) {

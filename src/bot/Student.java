@@ -31,20 +31,20 @@ public class Student {
                     this.name = value;
                     return null;
                 }
-                else return "Р”РѕР»Р¶РµРЅ СЃРѕСЃС‚РѕСЏС‚СЊ РёР· СЃРёРјРІРѕР»РѕРІ";
+                else return "Должен состоять из символов";
             case Group:
-                if (Pattern.matches("[Р°-СЏРђ-РЇ]+[-_ ]\\d{3}", value)) {
+                if (Pattern.matches("[а-яА-Я]+[-_ ]\\d{3}", value)) {
                     String[] array = value.split("[-_ ]");
-                    this.group = array[0] + "-" +array[1];
+                    this.group = array[0].toUpperCase() + "-" +array[1];
                     return null;
                 }
-                else return "Р’РІРµРґРёС‚Рµ РіСЂСѓРїРїСѓ РїРѕ С€Р°Р±Р»РѕРЅСѓ РљРќ-203";
+                else return "Введите группу по шаблону КН-203";
             case Subgroup:
                 if (Pattern.matches("[12]", value)) {
                     this.subgroup = value;
                     return null;
                 }
-                else return "РІРІРµРґРёС‚Рµ 1 РёР»Рё 2";
+                else return "введите 1 или 2";
             default:
                 return "";
         }
@@ -53,8 +53,8 @@ public class Student {
     @Override
     public String toString() {
         if (this.isNotAuthorized())
-            return "РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ РЅРµ Р°РІС‚РѕСЂРёР·РѕРІР°РЅ";
-        return String.format("РРјСЏ: %s\nР“СЂСѓРїРїР°: %s\nРќРѕРјРµСЂ РіСЂСѓРїРїС‹: %s",
+            return "Пользователь не авторизован";
+        return String.format("Имя: %s\nГруппа: %s\nНомер группы: %s",
                 this.name, this.group, this.subgroup);
     }
 }

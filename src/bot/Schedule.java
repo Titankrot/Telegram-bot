@@ -9,13 +9,13 @@ import java.util.Scanner;
 
 public class Schedule {
     private static Map<Integer, String> days = Map.of(
-            0, "–ü–Ω",
-            1, "–í—Ç",
-            2, "–°—Ä",
-            3, "–ß—Ç",
-            4, "–ü—Ç",
-            5, "–°–±",
-            6, "–í—Å");
+            0, "œÌ",
+            1, "¬Ú",
+            2, "—",
+            3, "◊Ú",
+            4, "œÚ",
+            5, "—·",
+            6, "¬Ò");
 
     private static String getScheduleFromTo(String group, String start, String end) throws IOException {
         Path path = Path.of(".","resources", "rasp.txt");
@@ -44,11 +44,11 @@ public class Schedule {
     public String getTodaySchedule(Student student) {
         Calendar curTime = new GregorianCalendar();
         int dayOfWeek = curTime.get(Calendar.DAY_OF_WEEK);
-        return getDayOfWeekSchedule(student, DayOfWeek.values()[dayOfWeek]);
+        return getDayOfWeekSchedule(student, DayOfWeek.values()[(dayOfWeek + 5)%7]);
     }
 
     public String getDayOfWeekSchedule(Student student, DayOfWeek dayOfWeek) {
-        String day = days.get(dayOfWeek.ordinal());
+        String day = days.get((dayOfWeek.ordinal())%7);
         String nextDay = days.get((dayOfWeek.ordinal()+1)%7);
         try {
             return getScheduleFromTo(student.getGroup(), day, nextDay);

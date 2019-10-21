@@ -51,8 +51,8 @@ public class Bot extends TelegramLongPollingBot {
                     sendText(message, student.toString());
                     break;
                 default:
-                    sendText(message, "Р§С‚РѕР±С‹ РѕС‚РІРµС‚РёС‚СЊ Р±РѕС‚Сѓ СЃРјР°С…РЅРёС‚Рµ РµРіРѕ РІРѕРїСЂРѕСЃ РІР»РµРІРѕ,\n" +
-                            "Р§С‚РѕР±С‹ РІС‹Р·РІР°С‚СЊ РёРЅС„РѕСЂРјР°С†РёСЋ Рѕ СЃРµР±Рµ:\n /info");
+                    sendText(message, "Чтобы ответить боту смахните его вопрос влево,\n" +
+                            "Чтобы вызвать информацию о себе:\n /info");
                     break;
             }
         }
