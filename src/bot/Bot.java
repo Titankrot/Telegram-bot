@@ -9,7 +9,7 @@ import org.telegram.telegrambots.exceptions.TelegramApiException;
 import java.util.HashMap;
 
 public class Bot extends TelegramLongPollingBot {
-    private HashMap<Integer, Student> students = new HashMap<>();
+    private DataBase students = new DataBase();
     private String botToken;
     private Schedule schedule;
 
@@ -74,6 +74,7 @@ public class Bot extends TelegramLongPollingBot {
                     Questionnaire.containsInQuestions(message.getReplyToMessage().getText())) {
                 String question = message.getReplyToMessage().getText();
                 String error = student.setAttr(Questionnaire.getAttrFromQuestion(question), message.getText());
+                students.put(id, student);
                 if (error == null) {
                     String text = Questionnaire.askAuthorizationQuestion(
                             Questionnaire.getQuestionNumber(question)
