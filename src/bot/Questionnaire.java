@@ -14,26 +14,31 @@ public class Questionnaire {
     }
 
     public static Attr getAttrFromQuestion(String question) {
-        if (question.equals(authorizeQuestions[0]))
+        if (question.equals(authorizeQuestions[0])) {
             return Attr.Name;
-        else if (question.equals(authorizeQuestions[1]))
+        }
+        else if (question.equals(authorizeQuestions[1])) {
             return Attr.Group;
-        else
+        }
+        else {
             return Attr.Subgroup;
+        }
     };
 
     public static int getQuestionNumber(String quest){
         for (int i = 0; i < authorizeQuestions.length; i++) {
             String question = authorizeQuestions[i];
-            if (question.equals(quest))
+            if (question.equals(quest)) {
                 return i;
+            }
         }
         return -1;
     }
 
     public static String askAuthorizationQuestion(int authorizeStep){
-        if (authorizeStep == authorizeQuestions.length)
+        if (authorizeStep == authorizeQuestions.length) {
             return null;
+        }
         return authorizeQuestions[authorizeStep];
     }
 }

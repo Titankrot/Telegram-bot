@@ -29,13 +29,15 @@ public class Schedule {
                 groupFound = sub.contains(group);
                 continue;
             }
-            if (sub.contains(start))
+            if (sub.contains(start)) {
                 break;
+            }
         }
         while (br.hasNext()) {
             sub = br.nextLine();
-            if (sub.contains(end))
+            if (sub.contains(end)) {
                 break;
+            }
             fileContent.append(sub).append("\n");
         }
         return fileContent.toString();
@@ -43,8 +45,11 @@ public class Schedule {
 
     public String getTodaySchedule(Student student) {
         Calendar curTime = new GregorianCalendar();
-        int dayOfWeek = curTime.get(Calendar.DAY_OF_WEEK);
-        return getDayOfWeekSchedule(student, DayOfWeek.values()[(dayOfWeek + 5)%7]);
+        int dayOfWeek = (curTime.get(Calendar.DAY_OF_WEEK) + 5)%7;
+        if (dayOfWeek == 6) {
+            return "Живи спокойно, воскресенье";
+        }
+        return getDayOfWeekSchedule(student, DayOfWeek.values()[dayOfWeek]);
     }
 
     public String getDayOfWeekSchedule(Student student, DayOfWeek dayOfWeek) {

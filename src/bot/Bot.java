@@ -6,8 +6,6 @@ import org.telegram.telegrambots.api.objects.Update;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.exceptions.TelegramApiException;
 
-import java.util.HashMap;
-
 public class Bot extends TelegramLongPollingBot {
     private DataBase students = new DataBase();
     private String botToken;
@@ -35,14 +33,13 @@ public class Bot extends TelegramLongPollingBot {
         Message message = update.getMessage();
         Student student = authorizeStudent(message);
         if (student == null) return;
-        int id = message.getFrom().getId();
         if (message.hasText()){
             switch (message.getText()){
                 case "/today":
                     sendText(message, schedule.getTodaySchedule(student));
                     break;
                 case "/help":
-                    sendText(message, "hz poka");
+                    sendText(message, "/today\n/info");
                     break;
                 case "/settings":
                     sendText(message, "hz poka");
@@ -66,27 +63,28 @@ public class Bot extends TelegramLongPollingBot {
             sendText(message, Questionnaire.askAuthorizationQuestion(0));
             return null;
         }
-        else {
-            Student student = students.get(id);
-            if (student.isNotAuthorized() &&
-                    message.getText() != null &&
-                    message.getReplyToMessage() != null &&
-                    Questionnaire.containsInQuestions(message.getReplyToMessage().getText())) {
-                String question = message.getReplyToMessage().getText();
-                String error = student.setAttr(Questionnaire.getAttrFromQuestion(question), message.getText());
-                students.put(id, student);
-                if (error == null) {
-                    String text = Questionnaire.askAuthorizationQuestion(
-                            Questionnaire.getQuestionNumber(question)
-                            + 1);
-                    if (text != null)
-                        sendText(message, text);
-                }
-                else sendText(message, error);
-                return null;
-            }
+        Student student = students.get(id);
+        if (!student.isNotAuthorized() ||
+                message.getText() == null ||
+                message.getReplyToMessage() == null ||
+                !Questionnaire.containsInQuestions(message.getReplyToMessage().getText())) {
             return student;
         }
+        String question = message.getReplyToMessage().getText();
+        String error = student.setAttr(Questionnaire.getAttrFromQuestion(question), message.getText());
+        students.put(id, student);
+        if (error == null) {
+            String text = Questionnaire.askAuthorizationQuestion(
+                    Questionnaire.getQuestionNumber(question)
+                    + 1);
+            if (text != null) {
+                sendText(message, text);
+            }
+        }
+        else {
+            sendText(message, error);
+        }
+        return null;
     }
 
     public String getBotUsername() {

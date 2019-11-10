@@ -31,20 +31,26 @@ public class Student {
                     this.name = value;
                     return null;
                 }
-                else return "Должен состоять из символов";
+                else {
+                    return "Должен состоять из символов";
+                }
             case Group:
                 if (Pattern.matches("[а-яА-Я]+[-_ ]\\d{3}", value)) {
                     String[] array = value.split("[-_ ]");
                     this.group = array[0].toUpperCase() + "-" +array[1];
                     return null;
                 }
-                else return "Введите группу по шаблону КН-203";
+                else {
+                    return "Введите группу по шаблону КН-203";
+                }
             case Subgroup:
                 if (Pattern.matches("[12]", value)) {
                     this.subgroup = value;
                     return null;
                 }
-                else return "введите 1 или 2";
+                else {
+                    return "введите 1 или 2";
+                }
             default:
                 return "";
         }
@@ -52,8 +58,9 @@ public class Student {
 
     @Override
     public String toString() {
-        if (this.isNotAuthorized())
+        if (this.isNotAuthorized()) {
             return "Пользователь не авторизован";
+        }
         return String.format("Имя: %s\nГруппа: %s\nНомер группы: %s",
                 this.name, this.group, this.subgroup);
     }
