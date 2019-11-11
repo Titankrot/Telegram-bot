@@ -2,6 +2,7 @@ package tests;
 
 import bot.Attr;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import bot.DataBase;
 import bot.Student;
@@ -10,20 +11,22 @@ import bot.Student;
 import static org.junit.Assert.*;
 
 public class DataBaseTest {
-    private DataBase data;
-    private Student student;
+    private static DataBase data;
+    private static Student student;
 
-    @Before
-    public void setUp() {
-        data = new DataBase();
+    @BeforeClass
+    public static void setUp() {
+        data = new DataBase("TestDataBase.s3db");
         student = new Student(0);
         student.setAttr(Attr.Name, "Danil");
         student.setAttr(Attr.Group, "สอ-203");
         student.setAttr(Attr.Subgroup, "2");
+        data.put(1, student);
     }
+
     @Test
     public void put() {
-        data.put(1, student);
+        data.put(2, student);
     }
 
     @Test
@@ -37,6 +40,6 @@ public class DataBaseTest {
     @Test
     public void containsKey() {
         assert data.containsKey(1);
-        assert !data.containsKey(2);
+        assert !data.containsKey(99);
     }
 }

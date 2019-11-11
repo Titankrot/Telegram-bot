@@ -1,5 +1,6 @@
 package bot;
 
+import java.nio.file.Path;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -9,8 +10,10 @@ import java.sql.Statement;
 public class DataBase {
     private static Connection conn;
     private static Statement statement;
+    private static Path pathToFile;
 
-    public DataBase() {
+    public DataBase(String filename) {
+        pathToFile = Path.of(".", "resources", filename);
         connect();
         createDB();
     }
@@ -19,7 +22,7 @@ public class DataBase {
         conn = null;
         try {
             Class.forName("org.sqlite.JDBC");
-            conn = DriverManager.getConnection("jdbc:sqlite:StudentData.s3db");
+            conn = DriverManager.getConnection("jdbc:sqlite:" + pathToFile);
         } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
         }
@@ -46,9 +49,8 @@ public class DataBase {
     }
 
     public Student get(int id) {
-        ResultSet resSet = null;
         try {
-            resSet = statement.executeQuery(String.format("SELECT * FROM students WHERE id = %d;", id));
+            ResultSet resSet = statement.executeQuery(String.format("SELECT * FROM students WHERE id = %d;", id));
             if (resSet.next())
             {
                 String  name = resSet.getString("name");
@@ -76,14 +78,14 @@ public class DataBase {
             e.printStackTrace();
         }
     }
+
     public boolean containsKey(int  id) {
-        ResultSet resSet = null;
         try {
-            resSet = statement.executeQuery(String.format("SELECT * FROM 'students' WHERE id = %d;", id));
+            ResultSet resSet = statement.executeQuery(String.format("SELECT * FROM 'students' WHERE id = %d;", id));
             return resSet.next();
         } catch (SQLException e) {
             e.printStackTrace();
+            return false;
         }
-        return false;
     }
 }

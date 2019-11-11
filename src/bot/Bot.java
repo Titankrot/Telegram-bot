@@ -7,7 +7,8 @@ import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.exceptions.TelegramApiException;
 
 public class Bot extends TelegramLongPollingBot {
-    private DataBase students = new DataBase();
+    private String filename = "StudentData.s3db";
+    private DataBase students = new DataBase(filename);
     private String botToken;
     private Schedule schedule;
 
