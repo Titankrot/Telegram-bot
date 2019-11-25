@@ -7,7 +7,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-public class DataBase {
+public class DataBase implements IDataBase {
     private static Connection conn;
     private static Statement statement;
     private static Path pathToFile;
