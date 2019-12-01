@@ -1,5 +1,6 @@
 package bot;
 
+import java.util.Map;
 import java.util.regex.Pattern;
 
 public class Student {
@@ -7,6 +8,8 @@ public class Student {
     private String name;
     private String group;
     private String subgroup;
+    private Map<String, String> groups = Map.of(
+            "สอ-203" , "ฬลอ-280208");
 
     public Student(int id) { this.id = id; }
 
@@ -21,6 +24,8 @@ public class Student {
     public String getName() { return  this.name; }
 
     public String getGroup() { return  this.group; }
+
+    public String getUrFUGroup() { return this.groups.get(this.group); }
 
     public String getSubgroup() { return this.subgroup; }
 
