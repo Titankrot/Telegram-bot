@@ -20,9 +20,6 @@ public class Schedule {
         if (dayOfWeek == 6) {
             return "Живи спокойно, воскресенье";
         }
-        if (dayOfWeek == 5) {
-            return "Живи спокойно, суббота";
-        }
         return getDayOfWeekSchedule(student, DayOfWeek.values()[dayOfWeek]);
     }
 

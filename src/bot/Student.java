@@ -9,7 +9,8 @@ public class Student {
     private String group;
     private String subgroup;
     private Map<String, String> groups = Map.of(
-            "สอ-203" , "ฬลอ-280208");
+            "สอ-203" , "ฬลอ-280208",
+            "สอ-202","ฬลอ-280207");
 
     public Student(int id) { this.id = id; }
 
